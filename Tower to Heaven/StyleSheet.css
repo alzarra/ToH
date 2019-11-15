@@ -1,4 +1,11 @@
-﻿.item1 {
+﻿canvas {
+    background: green;
+    position: absolute;
+    height: 100%;
+    width: 1000px;
+}
+
+item1 {
     grid-area: header;
 }
 
@@ -10,6 +17,7 @@
     grid-area: main;
     height: 500px;
     bottom: 0;
+    position: relative;
 }
 
 .block {
