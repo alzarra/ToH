@@ -44,6 +44,18 @@
                 <canvas id="myCanvas" height="500" width="500" ></canvas>
 
          </div>
+
+            <div class="item4">
+          
+                <asp:Label ID="workers" runat="server" Text="Workers (0)"></asp:Label>
+                <br />
+                <asp:Label ID="workersStat" runat="server" Text="50g | 10cm" style="color:black;font-size:15px;font-weight:bold"></asp:Label>
+
+
+                <asp:Button ID="Button1" runat="server" Text="Hire" OnClick="Button1_Click" />
+
+
+            </div>
             </div>
     </form>
     <script>

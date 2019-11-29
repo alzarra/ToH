@@ -17,6 +17,11 @@
     grid-area: main;
     bottom: 0;
 }
+.item4 {
+    grid-area: upgrade;
+    height:300px;
+    overflow-y: scroll
+}
 
 .block {
     bottom: 0;
@@ -26,10 +31,11 @@
 
 .grid-container {
     display: grid;
-    grid-template-areas: 'header header header header header menu' 'main main main main main menu' 'main main main main main menu';
+    grid-template-areas: 'header header header header header header' 'main main main main main menu' 'main main main main main upgrade' 'main main main main main upgrade';
     grid-gap: 10px;
     background-color: slategrey;
     padding: 10px;
+    overflow-y: auto
 }
 
     .grid-container > div {
