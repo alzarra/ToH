@@ -4,7 +4,7 @@
     width: 500px;
 }
 
-item1 {
+.item1 {
     grid-area: header;
 }
 

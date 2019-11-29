@@ -9,11 +9,6 @@
     <link rel="stylesheet" type="text/css" href="StyleSheet.css"/>
     <title>Tower to Heaven</title>
 
-<style type="text/css">
-        .auto-style1 {
-            width: 36px;
-        }
-    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -22,7 +17,7 @@
                 <asp:Button ID="user" runat="server" Text="Login \ Signin" />
                 
 
-                <asp:Label ID="header" runat="server" Text="TOWER OF HEAVEN" ></asp:Label>
+                <asp:Label ID="header" runat="server" Text="TOWER TO HEAVEN" ></asp:Label>
                 
 
             </div>
@@ -31,14 +26,20 @@
                 <br />
                 <asp:TextBox ID="text" runat="server" disabled style= text-aligned:center></asp:TextBox>
                 <br />
+
                 <asp:Label ID="blockLbl" runat="server" Text="Block Height:"></asp:Label>
                 <br />
                 <asp:TextBox ID="blocktext" runat="server" disabled style= text-aligned:center></asp:TextBox>
+                <br />
+
+                <asp:Label ID="goldLbl" runat="server" Text="GOLD:"></asp:Label>
+                <br />
+                <asp:TextBox ID="goldtext" runat="server" disabled style= text-aligned:center></asp:TextBox>
 
             </div>
          <div class="item3" href=# onclick="build()">
 
-            <br /><br />
+             <br />
 
                 <canvas id="myCanvas" height="500" width="500" ></canvas>
 
@@ -69,8 +70,19 @@
 
         ctx.rect(75, 400, blockWidth, 0);
         ctx.stroke();
-        dtx.rect(0, 400, blockWdith, 10);
+        //dtx.rect(0, 400, 0, 10);
         dtx.stroke();
+
+        
+        var gold = 0;
+        setInterval(runGold, 1000);
+        document.getElementById('goldtext').value = gold;
+
+        function runGold() {
+            console.log(Math.floor(towerHeight/100));
+            gold += Math.floor(towerHeight/100);
+            document.getElementById('goldtext').value = gold;
+        }
 
         function build() {
             towerHeight = towerHeight + 10;
@@ -117,6 +129,8 @@
         function clear() {
             ctx.clearRect(0, 0, c.width, c.height);
         }
+
+
     </script>
 </body>
 </html>
