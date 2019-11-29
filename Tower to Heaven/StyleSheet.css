@@ -1,8 +1,7 @@
 ﻿canvas {
-    background: green;
-    position: absolute;
-    height: 100%;
-    width: 1000px;
+    background: white;
+    height: 500px;
+    width: 500px;
 }
 
 item1 {
@@ -14,14 +13,12 @@ item1 {
 }
 
 .item3 {
+    background: white;
     grid-area: main;
-    height: 500px;
     bottom: 0;
-    position: relative;
 }
 
 .block {
-
     bottom: 0;
     font-size: 3em;
 }
