@@ -37,7 +37,7 @@
                 <asp:TextBox ID="goldtext" runat="server" disabled style= text-aligned:center></asp:TextBox>
 
             </div>
-         <div class="item3" href=# onclick="build()">
+         <div class="item3" href=# onclick="build(10)">
 
              <br />
 
@@ -47,12 +47,12 @@
 
             <div class="item4">
           
-                <asp:Label ID="workers" runat="server" Text="Workers (0)"></asp:Label>
+                <asp:Label ID="workers" runat="server" Text="Workers (-)"></asp:Label>
                 <br />
-                <asp:Label ID="workersStat" runat="server" Text="50g | 10cm" style="color:black;font-size:15px;font-weight:bold"></asp:Label>
+                <asp:Label ID="workersStat" runat="server"  style="color:black;font-size:15px;font-weight:bold"></asp:Label>
 
 
-                <asp:Button ID="Button1" runat="server" Text="Hire" OnClick="Button1_Click" />
+                <button type="button" onclick="upgradeOne()">Hire</button>
 
 
             </div>
@@ -90,14 +90,25 @@
         setInterval(runGold, 1000);
         document.getElementById('goldtext').value = gold;
 
+        //Upgrade One: Workers
+        var upgradeOneLevel = 0;
+        var upgradeOneCost = 50;
+        document.getElementById('workers').textContent = "Workers (" + upgradeOneLevel + ")";
+        document.getElementById('workersStat').textContent = upgradeOneCost + " gold | 10cm";
+
+        //Height Restrictions
+        var passBK = false;
+
         function runGold() {
-            console.log(Math.floor(towerHeight/100));
+            if (upgradeOneLevel > 0) {
+                build(upgradeOneLevel*10);
+            }
             gold += Math.floor(towerHeight/100);
             document.getElementById('goldtext').value = gold;
         }
 
-        function build() {
-            towerHeight = towerHeight + 10;
+        function build(num) {
+            towerHeight = towerHeight + num;
             
             document.getElementById('text').value = towerHeight + "cm";
 
@@ -112,14 +123,37 @@
                  base_image.src = 'BK.png';
                  base_image.onload = function () {
                     ctx.drawImage(base_image, 150, 80);
-        }
+                 }
             
                 expand(towerHeight, offset);
             }
-            if (towerHeight > 400)
-            {
-                newblockcounter = newblockcounter + 10;
-                if (newblockcounter == 400) {
+            else if (towerHeight > 8000) {
+                if (passBK == false) {
+                    clear();
+                    offset = 390 * 3;
+                    passBK = true;
+                    document.getElementById('blocktext').value = 4000 + "cm";
+                    base_image = new Image();
+                    base_image.src = 'EVE.png';
+                    base_image.onload = function (){
+                        ctx.drawImage(base_image, 0, 150);
+                    }
+                    expand(towerHeight, offset);
+                }
+                newblockcounter = newblockcounter + num;
+                if (newblockcounter >= 4000) {
+                    newblockcounter = 0;
+                    newblock = newblock + 1;
+                    ctx.beginPath();
+                    ctx.rect(75+center, 400-(10*newblock), blockWidth, 10);
+                    ctx.stroke();
+                }
+
+            }
+
+            else if (towerHeight > 400){
+                newblockcounter = newblockcounter + num;
+                if (newblockcounter >= 400) {
                     newblockcounter = 0;
                     newblock = newblock + 1;
                     ctx.beginPath();
@@ -127,6 +161,7 @@
                     ctx.stroke();
                 }
             }
+
             else {
                 expand(towerHeight, offset);
             }
@@ -140,6 +175,17 @@
 
         function clear() {
             ctx.clearRect(0, 0, c.width, c.height);
+        }
+
+        function upgradeOne() {
+            if (gold >= upgradeOneCost) {
+                gold -= upgradeOneCost;
+                upgradeOneLevel += 1;
+                upgradeOneCost = Math.floor(upgradeOneCost * 1.2);
+                document.getElementById('goldtext').value = gold;
+                document.getElementById('workers').textContent = "Workers (" + upgradeOneLevel + ")";
+                document.getElementById('workersStat').textContent = upgradeOneCost + " gold | 10cm";
+            }
         }
 
 
