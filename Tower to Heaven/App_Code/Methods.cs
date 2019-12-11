@@ -90,10 +90,36 @@ public class Methods
     }
 
     // save //
-    public void save_att(int gold, int th, int bh, int u1, int u2, int u3, int u4)
+    public void save_att(string username ,int gold, int th, int u1, int u2, int u3)
     {
+        string myConnectionString = "Data Source=(local);Initial Catalog=TOH;User ID=adminAli;Password=AliAli";
+        SqlConnection myConnection = new SqlConnection(myConnectionString);
+        myConnection.Open();
+
+        
+
+        string myQuery = "spUpdate";
+
+        DataSet myDataSet = new DataSet();
+        SqlCommand myCommand = new SqlCommand(myQuery);
+        myCommand.Connection = myConnection;
+        myCommand.CommandType = CommandType.StoredProcedure;
+
+        SqlParameter[] myParameters = new SqlParameter[6];
+        myParameters[0] = new SqlParameter("username", username);
+        myParameters[1] = new SqlParameter("gold", gold);
+        myParameters[2] = new SqlParameter("th", th);
+        myParameters[3] = new SqlParameter("u1", u1);
+        myParameters[4] = new SqlParameter("u2", u2);
+        myParameters[5] = new SqlParameter("u3", u3);
+        
+
+        myCommand.Parameters.AddRange(myParameters);
+        myCommand.ExecuteNonQuery();
 
     }
+
+
 
 }
 

@@ -9,17 +9,27 @@
     <link rel="stylesheet" type="text/css" href="StyleSheet.css"/>
     <title>Tower to Heaven</title>
 
+    <style type="text/css">
+        .auto-style1 {
+            font-size: larger;
+        }
+        .auto-style2 {
+            font-size: medium;
+        }
+    </style>
+
 </head>
 <body>
     <form id="form1" runat="server">
         <div class="grid-container">
             <div class="item1">
-                <asp:Label ID="UserID" runat="server" Visible="False"></asp:Label>
-                <asp:Label ID="UserName" runat="server" Visible="False"></asp:Label>
-                <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click" />
+                <asp:Label ID="UserID" runat="server"></asp:Label>
+                Welcome
+                <asp:Label ID="UserName" runat="server" CssClass="auto-style2" ForeColor="#000099"></asp:Label>
+                <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click" EnableViewState="False" />
                 
 
-                <asp:Label ID="header" runat="server" Text="TOWER TO HEAVEN" ></asp:Label>
+                <asp:Label ID="header" runat="server" Text="TOWER TO HEAVEN" CssClass="auto-style1" ForeColor="Maroon" ></asp:Label>
                 
 
                 <asp:Button ID="user" runat="server" Text="Load / Sign Up" OnClick="user_Click" />
@@ -29,19 +39,19 @@
             <div class="item2">
                 <asp:Label ID="heightLbl" runat="server" Text="Tower Height:"></asp:Label>
                 <br />
-                <asp:TextBox ID="text" runat="server" disabled style= text-aligned:center></asp:TextBox>
-                <br />
+                <asp:TextBox ID="text" runat="server"  style= text-aligned:center></asp:TextBox>
+                cm<br />
 
                 <asp:Label ID="blockLbl" runat="server" Text="Block Height:"></asp:Label>
                 <br />
-                <asp:TextBox ID="blocktext" runat="server" disabled style= text-aligned:center></asp:TextBox>
-                <br />
+                <asp:TextBox ID="blocktext" runat="server"  style= text-aligned:center></asp:TextBox>
+                cm<br />
 
                 <asp:Label ID="goldLbl" runat="server" Text="GOLD:"></asp:Label>
                 <br />
-                <asp:TextBox ID="goldtext" runat="server" disabled style= text-aligned:center></asp:TextBox>
+                <asp:TextBox ID="goldtext" runat="server"  style= text-aligned:center></asp:TextBox>
 
-            </div>
+                $</div>
          <div class="item3" href=# onclick="build(10)">
 
              <br />
@@ -52,37 +62,45 @@
 
             <div class="item4">
           
-                <asp:Label ID="workers" runat="server" Text="Workers (-)"></asp:Label>
-                <br />
+                Workers(<asp:TextBox ID="workers" runat="server" Width="16px" ></asp:TextBox>
+                )<br />
                 <asp:Label ID="workersStat" runat="server"  style="color:black;font-size:15px;font-weight:bold"></asp:Label>
                 <button type="button" onclick="upgradeOne()">Hire</button>
                 <br />
                 _____________
                 <br />
-                <asp:Label ID="trucks" runat="server" Text="Trucks (-)"></asp:Label>
-                <br />
+                Trucks(<asp:TextBox ID="trucks" runat="server" Width="16px" ></asp:TextBox>
+                )<br />
                 <asp:Label ID="trucksStat" runat="server"  style="color:black;font-size:15px;font-weight:bold"></asp:Label>
                 <button type="button" onclick="upgradeTwo()">Hire</button>
                 <br />
                 _____________
                 <br />
-                <asp:Label ID="cranes" runat="server" Text="Cranes (-)"></asp:Label>
-                <br />
+                Cranes(<asp:TextBox ID="cranes" runat="server" Width="16px" ></asp:TextBox>
+                )<br />
                 <asp:Label ID="cranesStat" runat="server"  style="color:black;font-size:15px;font-weight:bold"></asp:Label>
                 <button type="button" onclick="upgradeThree()">Hire</button>
 
 
+
             </div>
+            <asp:HiddenField runat="server" ID="given_th" /> 
+            <asp:HiddenField runat="server" ID="given_gold" />
+            <asp:HiddenField runat="server" ID="given_u1" />
+            <asp:HiddenField runat="server" ID="given_u2" />
+            <asp:HiddenField runat="server" ID="given_u3" />
             </div>
     </form>
     <script>
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
         var dtx = c.getContext("2d");
-        towerHeight = 0; //FOR ALI!!!! THIS ONE
+
+        var towerHeight = 0; //FOR ALI!!!! THIS ONE
         var gameStage = 1;
-        document.getElementById('text').value = towerHeight + "cm";
-        document.getElementById('blocktext').value = 20 + "cm";
+        document.getElementById('text').value = towerHeight ;
+        document.getElementById('blocktext').value = 20 ;
+        //document.getElementById('given_th').value = towerHeight;
 
         var blockHeight = 20;
         var currentBlockHeight = 0;
@@ -98,24 +116,28 @@
         var gold = 0; //FOR ALI!!!! THIS ONE
         setInterval(runGold, 1000);
         document.getElementById('goldtext').value = gold;
+       // document.getElementById('given_gold').value = gold;
 
         //Upgrade One: Workers
         var upgradeOneLevel = 0; //FOR ALI!!!! THIS ONE
         var upgradeOneCost = 50;
-        document.getElementById('workers').textContent = "Workers (" + upgradeOneLevel + ")";
+        document.getElementById('workers').value = upgradeOneLevel;
         document.getElementById('workersStat').textContent = upgradeOneCost + " gold | 10cm";
+        //document.getElementById('given_u1').value = upgradeOneLevel;
 
         //Upgrade Two: Trucks
         var upgradeTwoLevel = 0; //FOR ALI!!!! THIS ONE
         var upgradeTwoCost = 300;
-        document.getElementById('trucks').textContent = "Trucks (" + upgradeTwoLevel + ")";
+        document.getElementById('trucks').value = upgradeTwoLevel;
         document.getElementById('trucksStat').textContent = upgradeTwoCost + " gold | 350cm";
+       // document.getElementById('given_u2').value = upgradeTwoLevel;
 
         //Upgrade Three: Cranes
         var upgradeThreeLevel = 0; //FOR ALI!!!! THIS ONE
         var upgradeThreeCost = 1000;
-        document.getElementById('cranes').textContent = "Cranes (" + upgradeThreeLevel + ")";
+        document.getElementById('cranes').value =  upgradeThreeLevel;
         document.getElementById('cranesStat').textContent = upgradeThreeCost + " gold | 1000cm";
+        //document.getElementById('given_u3').value = upgradeThreeLevel;
 
         //Height Restrictions
         var passBK = false;
@@ -125,7 +147,7 @@
             if (upgradeOneLevel > 0) {
                 build(upgradeOneLevel * 10 + upgradeTwoLevel * 350 + upgradeThreeLevel*1000);
             }
-            gold += Math.floor(towerHeight/100);
+            gold += Math.floor(towerHeight / 100);
             document.getElementById('goldtext').value = gold;
         }
 
@@ -134,7 +156,7 @@
             towerHeight += num;
             currentBlockHeight += num;
 
-            document.getElementById('text').value = towerHeight + "cm";
+            document.getElementById('text').value = towerHeight ;
 
             expand(230, towerHeight);
         }
@@ -193,7 +215,7 @@
                         heightStage = 2;
                         blockHeight = 240;
                         gameStage = 2;
-                        document.getElementById('blocktext').value = blockHeight + "cm";
+                        document.getElementById('blocktext').value = blockHeight ;
 
                         base_image = new Image();
                         base_image.src = 'Stage2.png';
@@ -205,7 +227,7 @@
                         heightStage = 2;
                         blockHeight = 2880;
                         gameStage = 3;
-                        document.getElementById('blocktext').value = blockHeight + "cm";
+                        document.getElementById('blocktext').value = blockHeight ;
 
                         base_image = new Image();
                         base_image.src = 'Stage3.png';
@@ -234,7 +256,7 @@
                 upgradeOneLevel += 1;
                 upgradeOneCost = Math.floor(upgradeOneCost * (upgradeOneLevel * 1.2));
                 document.getElementById('goldtext').value = gold;
-                document.getElementById('workers').textContent = "Workers (" + upgradeOneLevel + ")";
+                document.getElementById('workers').value = upgradeOneLevel;
                 document.getElementById('workersStat').textContent = upgradeOneCost + " gold | 10cm";
             }
         }
@@ -243,9 +265,9 @@
             if (gold >= upgradeTwoCost) {
                 gold -= upgradeTwoCost;
                 upgradeTwoLevel += 1;
-                upgradeTwoCost = Math.floor(upgradeTwoCost * (upgradeTwoLevel*1.4));
+                upgradeTwoCost = Math.floor(upgradeTwoCost * (upgradeTwoLevel * 1.4));
                 document.getElementById('goldtext').value = gold;
-                document.getElementById('trucks').textContent = "Trucks (" + upgradeTwoLevel + ")";
+                document.getElementById('trucks').value = upgradeTwoLevel;
                 document.getElementById('trucksStat').textContent = upgradeTwoCost + " gold | 350cm";
             }
         }
@@ -254,9 +276,9 @@
             if (gold >= upgradeThreeCost) {
                 gold -= upgradeThreeCost;
                 upgradeThreeLevel += 1;
-                upgradeThreeCost = Math.floor(upgradeThreeCost * (upgradeThreeLevel*1.6));
+                upgradeThreeCost = Math.floor(upgradeThreeCost * (upgradeThreeLevel * 1.6));
                 document.getElementById('goldtext').value = gold;
-                document.getElementById('cranes').textContent = "Cranes (" + upgradeThreeLevel + ")";
+                document.getElementById('cranes').value = upgradeThreeLevel;
                 document.getElementById('cranesStat').textContent = upgradeThreeCost + " gold | 1000cm";
             }
         }
