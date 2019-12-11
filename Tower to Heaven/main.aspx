@@ -63,29 +63,21 @@
         var ctx = c.getContext("2d");
         var dtx = c.getContext("2d");
         towerHeight = 0;
+        var gameStage = 1;
         document.getElementById('text').value = towerHeight + "cm";
-        document.getElementById('blocktext').value = 10 + "cm";
-        newblock = 0;
-        newblockcounter = 0;
+        document.getElementById('blocktext').value = 20 + "cm";
+
+        var blockHeight = 20;
+        var currentBlockHeight = 0;
+        var heightStage = 0;
 
         base_image = new Image();
-        base_image.src = 'me.png';
+        base_image.src = 'Stage1.png';
         base_image.onload = function () {
-            ctx.drawImage(base_image, 250, 230);
+            dtx.drawImage(base_image, 0, 0);
         }
 
-        
-        blockWidth = 150;
-        offset = 0;
-        width = 150;
-        center = 0;
-
-        ctx.rect(75, 400, blockWidth, 0);
-        ctx.stroke();
-        //dtx.rect(0, 400, 0, 10);
-        dtx.stroke();
-
-        
+        //Gold Variable
         var gold = 0;
         setInterval(runGold, 1000);
         document.getElementById('goldtext').value = gold;
@@ -99,6 +91,7 @@
         //Height Restrictions
         var passBK = false;
 
+        //Give Gold based on height every Second
         function runGold() {
             if (upgradeOneLevel > 0) {
                 build(upgradeOneLevel*10);
@@ -107,71 +100,70 @@
             document.getElementById('goldtext').value = gold;
         }
 
+        //Add height
         function build(num) {
-            towerHeight = towerHeight + num;
-            
+            towerHeight += num;
+            currentBlockHeight += num;
+
             document.getElementById('text').value = towerHeight + "cm";
 
-            if (towerHeight == 400) {
-                clear();
-                offset = 390;
-                blockWidth = 75;
-                center = 37
-                document.getElementById('blocktext').value = 400 + "cm";
-                newblock = newblock + 1;
-                base_image = new Image();
-                 base_image.src = 'BK.png';
-                 base_image.onload = function () {
-                    ctx.drawImage(base_image, 150, 80);
-                 }
-            
-                expand(towerHeight, offset);
-            }
-            else if (towerHeight > 8000) {
-                if (passBK == false) {
-                    clear();
-                    offset = 390 * 3;
-                    passBK = true;
-                    document.getElementById('blocktext').value = 4000 + "cm";
-                    base_image = new Image();
-                    base_image.src = 'EVE.png';
-                    base_image.onload = function (){
-                        ctx.drawImage(base_image, 0, 150);
-                    }
-                    expand(towerHeight, offset);
-                }
-                newblockcounter = newblockcounter + num;
-                if (newblockcounter >= 4000) {
-                    newblockcounter = 0;
-                    newblock = newblock + 1;
-                    ctx.beginPath();
-                    ctx.rect(75+center, 400-(10*newblock), blockWidth, 10);
-                    ctx.stroke();
-                }
-
-            }
-
-            else if (towerHeight > 400){
-                newblockcounter = newblockcounter + num;
-                if (newblockcounter >= 400) {
-                    newblockcounter = 0;
-                    newblock = newblock + 1;
-                    ctx.beginPath();
-                    ctx.rect(75+center, 400-(10*newblock), blockWidth, 10);
-                    ctx.stroke();
-                }
-            }
-
-            else {
-                expand(towerHeight, offset);
-            }
+            expand(230, towerHeight);
         }
 
+        //Draw Blocks
         function expand(x, y) {
-            ctx.beginPath();
-            ctx.rect(75+center, 400 - x + y, blockWidth, 10);
-            ctx.stroke();
+            while (currentBlockHeight >= blockHeight) {
+                currentBlockHeight -= blockHeight;
+                heightStage += 1;
+                base_image = new Image();
+                base_image.src = 'blockSmall.png';
+
+                if (gameStage == 1) {
+                    base_image.onload = function () {
+                        ctx.drawImage(base_image, 45, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 65, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 85, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 105, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 125, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 145, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 165, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 185, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 205, 495 - (20 * heightStage));
+                    }
+                }
+
+                else if (gameStage == 2) {
+                    base_image.onload = function () {
+                        ctx.drawImage(base_image, 51, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 71, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 91, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 111, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 131, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 151, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 171, 495 - (20 * heightStage));
+                        ctx.drawImage(base_image, 191, 495 - (20 * heightStage));
+
+                    }
+                }
+
+                if (heightStage >= 24){
+                    heightStage = 2;
+                    blockHeight = 240;
+                    gameStage = 2;
+                    document.getElementById('blocktext').value = blockHeight + "cm";
+
+                    base_image = new Image();
+                    base_image.src = 'Stage2.png';
+                    base_image.onload = function () {
+                        ctx.drawImage(base_image, 0, 0);
+                    }
+
+                }
+
+            }
         }
+
+
 
         function clear() {
             ctx.clearRect(0, 0, c.width, c.height);
