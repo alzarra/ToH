@@ -14,10 +14,15 @@
     <form id="form1" runat="server">
         <div class="grid-container">
             <div class="item1">
-                <asp:Button ID="user" runat="server" Text="Login \ Signin" />
+                <asp:Label ID="UserID" runat="server" Visible="False"></asp:Label>
+                <asp:Label ID="UserName" runat="server" Visible="False"></asp:Label>
+                <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click" />
                 
 
                 <asp:Label ID="header" runat="server" Text="TOWER TO HEAVEN" ></asp:Label>
+                
+
+                <asp:Button ID="user" runat="server" Text="Load / Sign Up" OnClick="user_Click" />
                 
 
             </div>
