@@ -9,8 +9,12 @@ public partial class main : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-         UserName.Text = Session["get_username"].ToString();
-         UserID.Text = Session["get_id"].ToString();
+        try
+        {
+            UserName.Text = Session["get_username"].ToString();
+            //UserID.Text = Session["get_id"].ToString();
+        }
+        catch { }
         
         //orginal value for all is 0
         given_th.Value = "0"; 
@@ -28,6 +32,7 @@ public partial class main : System.Web.UI.Page
 
     protected void Button1_Click(object sender, EventArgs e)
     {
+        
         // save
         //int gold = int.Parse(goldtext.Text);
         //int gold;
@@ -43,6 +48,8 @@ public partial class main : System.Web.UI.Page
 
         Methods myMethod = new Methods();
         myMethod.save_att(username, gold, th, u1, u2, u3);
+
+        Button1.Attributes.Add("onclick", "return false;");
     }
 }
 

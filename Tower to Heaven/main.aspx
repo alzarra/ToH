@@ -26,7 +26,7 @@
                 <asp:Label ID="UserID" runat="server"></asp:Label>
                 Welcome
                 <asp:Label ID="UserName" runat="server" CssClass="auto-style2" ForeColor="#000099"></asp:Label>
-                <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click" EnableViewState="False" />
+                <asp:Button ID="Button1" runat="server" Text="Save" OnClick="Button1_Click"  />
                 
 
                 <asp:Label ID="header" runat="server" Text="TOWER TO HEAVEN" CssClass="auto-style1" ForeColor="Maroon" ></asp:Label>

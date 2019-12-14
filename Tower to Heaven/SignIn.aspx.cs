@@ -48,6 +48,9 @@ public partial class SingIn : System.Web.UI.Page
                 Response.Write("Password is correct ");
                 Session["get_username"] = TextBox1.Text;
                 Session["get_id"] = TextBox2.Text;
+
+               
+                
                 Response.Redirect("main.aspx");
             }
             else
